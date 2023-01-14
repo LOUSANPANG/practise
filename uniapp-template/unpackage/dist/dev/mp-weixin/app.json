@@ -1,0 +1,37 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/login/login"
+  ],
+  "subPackages": [
+    {
+      "root": "pagesChild/status",
+      "pages": [
+        "pages/fail/fail",
+        "pages/success/success",
+        "pages/404/404"
+      ]
+    }
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "navigationBarTitleText": "",
+    "backgroundColor": "#F8F8F8"
+  },
+  "preloadRule": {
+    "pages/index/index": {
+      "packages": [
+        "pagesChild/status"
+      ]
+    }
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "uniapp希望获取您的位置信息"
+    }
+  },
+  "plugins": {},
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
+}
