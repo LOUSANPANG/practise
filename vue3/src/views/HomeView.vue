@@ -2,6 +2,9 @@
 </script>
 
 <template>
-  <main>
-  </main>
+  <!-- Unocss -->
+  <div class="i-mdi:airplane text-orange-400" />
 </template>
+
+<style scoped>
+</style>
