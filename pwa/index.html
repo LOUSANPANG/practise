@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PWA</title>
+
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <h1> 渐进式网页应用 </h1>
+  <img src="./logo.png" alt="pwa logo" srcset="">
+
+  <script>
+    // web worker 使用事例
+    const webWork = new Worker('./web-worker.js')
+    webWork.addEventListener('message', e => {
+      console.log('web worker load ==>', e.data)
+    })
+
+
+    // service worker 使用事例
+    window.addEventListener('load', () => {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./service-worker.js')
+          .then(res => {
+            console.log(res)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
+    })
+
+    // 提示
+    // 前提开启浏览器消息通知
+    if (Notification.prototype === 'default') { // 判断消息是否允许通知
+      Notification.requestPermission()
+    }
+    if (!navigator.onLine) { // 无网络
+      new Notification('提示', {
+        body: '当前无网络连接，当前访问的为缓存'
+      })
+    }
+    window.addEventListener('online', () => {  // 有网络
+      new Notification('提示', {
+        body: '网络已连接，请刷新网页'
+      })
+    })
+  </script>
+</body>
+</html>
