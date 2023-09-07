@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "lousanpang-chrome",
+  "version": "1.0.0",
+  "description": "Chrome扩展",
+  "icons": {
+    "48": "icon.png"
+  },
+
+  "action": {
+    "default_icon": "icon.png",
+    "default_title": "lousanpang的插件",
+    "default_popup": "popup.html"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [ "https://*/*" ],
+      "js": [ "content_scripts.js" ],
+      "run_at": "document_start"
+    }
+  ],
+
+  "permissions": [
+    "tabs"
+  ]
+}
