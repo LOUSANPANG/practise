@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  
+  <style>
+    .wrapper {
+      position: relative;
+      width: 1200px;
+      margin: 0 auto;
+      /* columns: 5;
+      column-gap: 10px; */
+    }
+    .wf-item .wf-img {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+
+
+</head>
+<body>
+  <div class="wrapper J_waterfall">
+    <div class="wf-item"><img src="img/1.jpeg" class="wf-img" /></div>
+    <div class="wf-item"><img src="img/2.jpeg" class="wf-img" /></div>
+    <div class="wf-item"><img src="img/3.jpeg" class="wf-img" /></div>
+    <div class="wf-item"><img src="img/4.jpeg" class="wf-img" /></div>
+    <div class="wf-item"><img src="img/5.jpeg" class="wf-img" /></div>
+    <div class="wf-item"><img src="img/6.jpeg" class="wf-img" /></div>
+    <div class="wf-item"><img src="img/7.jpeg" class="wf-img" /></div>
+    <div class="wf-item"><img src="img/8.jpeg" class="wf-img" /></div>
+    <div class="wf-item"><img src="img/9.jpeg" class="wf-img" /></div>
+    <div class="wf-item"><img src="img/10.jpeg" class="wf-img" /></div>
+    <div class="wf-item"><img src="img/11.jpeg" class="wf-img" /></div>
+  </div>
+
+
+  <script>
+    window.addEventListener('load', function() {
+      var Waterfall = function (opt) {
+        this.el = document.getElementsByClassName(opt.el)[0];
+        this.oItems = this.el.getElementsByTagName('div');
+        this.colmun = opt.colmun;
+        this.gap = opt.gap;
+        this.itemWidth = (this.el.offsetWidth - (this.colmun - 1) * this.gap) / this.colmun;
+        this.heightArr = []
+
+        this.render();
+      }
+
+      Waterfall.prototype.render = function () {
+        var item, minIdx;
+        
+
+        for (var i = 0; i < this.oItems.length; i++) {
+          item = this.oItems[i];
+          item.style.position = 'absolute';
+          item.style.width = this.itemWidth + 'px';
+          
+          if (i < this.colmun) {
+            item.style.top = '0';
+            item.style.left = i * (this.itemWidth + this.gap) + 'px';
+            this.heightArr.push(item.offsetHeight);
+            console.log(111, this.heightArr)
+          } else {
+            var minIdx = getMinIdx(this.heightArr);
+            item.style.left = this.oItems[minIdx].offsetLeft + 'px';
+            item.style.top = this.heightArr[minIdx] + this.gap + 'px';
+            this.heightArr[minIdx] += item.offsetHeight + this.gap;
+          }
+          
+        }
+      };
+
+      function getMinIdx(arr) {
+        return arr.indexOf(Math.min.apply(null, arr));
+      };
+
+      window.Waterfall = Waterfall;
+
+      new Waterfall({
+        el: 'J_waterfall',
+        colmun: 5,
+        gap: 10
+      })
+    })
+  </script>
+
+
+</body>
+</html>
