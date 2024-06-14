@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>瀑布流</title>
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+</head>
+<body>
+
+  <div class="grid" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 200 }'>
+    <div class="grid-item"><img src="img/1.jpeg" class="wf-img" /></div>
+    <div class="grid-item"><img src="img/2.jpeg" class="wf-img" /></div>
+    <div class="grid-item"><img src="img/3.jpeg" class="wf-img" /></div>
+    <div class="grid-item"><img src="img/4.jpeg" class="wf-img" /></div>
+    <div class="grid-item"><img src="img/5.jpeg" class="wf-img" /></div>
+    <div class="grid-item"><img src="img/6.jpeg" class="wf-img" /></div>
+    <div class="grid-item"><img src="img/7.jpeg" class="wf-img" /></div>
+    <div class="grid-item"><img src="img/8.jpeg" class="wf-img" /></div>
+    <div class="grid-item"><img src="img/9.jpeg" class="wf-img" /></div>
+    <div class="grid-item"><img src="img/10.jpeg" class="wf-img" /></div>
+    <div class="grid-item"><img src="img/11.jpeg" class="wf-img" /></div>
+  </div>
+  
+  <script>
+    var grid = document.querySelector('.grid');
+    var msnry = new Masonry( grid, {
+      itemSelector: '.grid-item',
+      columnWidth: 100
+    });
+  </script>
+  
+</body>
+</html>

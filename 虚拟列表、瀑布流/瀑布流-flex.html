@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  
+  <style>
+    .masonry {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+
+
+</head>
+<body>
+  <div class="masonry">
+    <!-- 第一列 -->
+    <div class="column">
+        <div class="item"></div>
+        <!-- more items-->
+    </div>
+    <!-- 第二列 -->
+    <div class="column">
+        <div class="item"></div>
+        <!-- more items-->
+    </div>
+    <!-- 第三列 -->
+    <div class="column">
+        <div class="item"></div>
+        <!-- more items-->
+    </div>
+</div>
+
+
+
+  <script>
+    let data1 = [], //第一列
+    data2 = [], //第二列
+    data3 = [], //第三列
+    i = 0;
+    while (i < data.length) {
+      data1.push(data[i++]);
+      if (i < data.length) {
+        data2.push(data[i++]);
+      }
+      if (i < data.length) {
+        data3.push(data[i++]);
+      }
+    }
+    return {
+      //第一列
+      data1,
+      //第二列
+      data2,
+      //第三列
+      data3
+    };
+  </script>
+
+
+</body>
+</html>

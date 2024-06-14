@@ -11,8 +11,6 @@
       position: relative;
       width: 1200px;
       margin: 0 auto;
-      /* columns: 5;
-      column-gap: 10px; */
     }
     .wf-item .wf-img {
       display: block;
@@ -40,6 +38,7 @@
 
 
   <script>
+    // 方式一：js计算
     window.addEventListener('load', function() {
       var Waterfall = function (opt) {
         this.el = document.getElementsByClassName(opt.el)[0];
@@ -48,19 +47,15 @@
         this.gap = opt.gap;
         this.itemWidth = (this.el.offsetWidth - (this.colmun - 1) * this.gap) / this.colmun;
         this.heightArr = []
-
         this.render();
       }
 
       Waterfall.prototype.render = function () {
         var item, minIdx;
-        
-
         for (var i = 0; i < this.oItems.length; i++) {
           item = this.oItems[i];
           item.style.position = 'absolute';
           item.style.width = this.itemWidth + 'px';
-          
           if (i < this.colmun) {
             item.style.top = '0';
             item.style.left = i * (this.itemWidth + this.gap) + 'px';
@@ -72,7 +67,6 @@
             item.style.top = this.heightArr[minIdx] + this.gap + 'px';
             this.heightArr[minIdx] += item.offsetHeight + this.gap;
           }
-          
         }
       };
 
