@@ -1,23 +1,38 @@
 {
+  "files": [
+    "src/基本语法.ts",
+
+    "src/type.d.ts"
+  ],
+
   "compilerOptions": {
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "skipLibCheck": true,
+    "target": "es2015",
+    "outDir": "dist",
 
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
+    // "baseUrl": "", // 指定脚本模块路径
+    // "paths": { // 映射
+    //   "jquery": ["node_modules/jquery/dist/jquery.min.js"]
+    // },
+    // "typeRoots": [] // 不再去node_modules/@types目录，而是去指定子目录，加载类型模块
+    // “types”: [ 'xx' ] // 去typeRoots下自动找对应的xx子目录加载声明文件
 
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "strictNullChecks": true, // null 声明检查
+    "noImplicitAny": true, // undefined 声明检查
+    "exactOptionalPropertyTypes": true, // 可选属性类型不能为undefined
+    "strictPropertyInitialization": true, // 类属性必须初始化
+
+    "preserveConstEnums": true, // 保留 const 枚举
+
+    "lib": [ // 引入内置对象的声明文件，ts的内置声明文件在node_modules/typescript/lib/xx下
+      "es2015",
+      "dom"
+    ],
+    "noLib": false, // 是否禁止加载声明文件
+    "declaration": true, // 编译时自动生成单独的类型声明文件
+
+    "moduleResolution": "Classic", // 模块定位策略，Classic/Node
+
+    // "experimentalDecorators": true, // 开启装饰符
   },
-  "include": ["src"]
+
 }
