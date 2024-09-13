@@ -223,3 +223,12 @@ docker push [镜像名]:[版本号]
 ```shell
 登录阿里云 - 找到容器镜像服务 - 创建命名空间 - 创建容器镜像 - 点击查看具体操作步骤
 ```
+
+
+## docker Compose
+
+
+## docker Swarm
+
+
+## Jenkins
