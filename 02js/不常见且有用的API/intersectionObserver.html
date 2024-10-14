@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div style="padding-top: 110vh; height: 120vh;">
+    <div class="mask" style="width: 10px;height: 10px;background-color: red;"></div>
+  </div>
+
+  <script>
+    // 监听元素重叠
+    const ob = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0]
+        if (entry.isIntersecting) {
+          console.log(entry, '观察的元素与视口交叉变化触发～')
+        }
+      },
+      {
+        root: null, // 跟谁进行交叉，null表示视口 可以是其他元素
+        threshold: 0, // 交叉多少时触发 0.5表示一半
+      }
+    )
+
+    const mask = document.querySelector('.mask')
+    ob.observe(mask)
+
+  </script>
+</body>
+</html>
