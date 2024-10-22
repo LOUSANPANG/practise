@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    /* 首字母下沉 */
+    p::first-letter {
+      font-size: 2em;
+      line-height: 1;
+      font-weight: 500;
+      float: left;
+    }
+
+    /* 选择文本的样式 */
+    p::selection {
+      background-color: aliceblue;
+    }
+
+    /* form的必填星号 */
+    label:has(+ input[required])::after {
+      content: '*';
+      color: red;
+    }
+
+    /* 聚焦时父元素样式触发 */
+    .f-input:focus-within {
+      background-color: #666;
+    }
+  </style>
+</head>
+<body>
+  <p>
+    lsdfksjflkjsdlfjsllkjfl;kajdflkjsdl;fjs;dlkfjls;akfjd
+  </p>
+
+  <form action="">
+    <label>name</label>
+    <input required type="text">
+  </form>
+  
+  <div class="f-input">
+    <input type="text">
+  </div>
+</body>
+</html>
