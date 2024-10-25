@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button>click</button>
+  
+  <script>
+    // 如果我循环一个100万的数组，循环添加到一个html元素中，页面会卡顿一会再渲染出来，为什么会这样？有什么解决方案？
+    
+    // 函数将在浏览器空闲时期被调用
+
+    const btn = document.querySelector('button')
+    const data = Array.from({ length: 10000 }, (_, index) => index)
+    btn.addEventListener('click', () => {
+      performanceChunk(data)
+    })
+
+    function performanceChunk(data) {
+      let i = 0
+      function _run() {
+        if (i >= data.length) return
+        requestIdleCallback((idle) => {
+          while (idle.timeRemaining() > 0 && i < data.length) {  // 空闲时期内，请求下一个任务
+            const div = document.createElement('div')
+            div.textContent = data[i]
+            document.body.appendChild(div)
+            i++
+          }
+          _run()
+        })
+      }
+      _run()
+    }
+  </script>
+</body>
+</html>
