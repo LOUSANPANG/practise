@@ -1,0 +1,24 @@
+@property --direc {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.card  {
+  --direc: 0deg;
+  color: red;
+  font-size: 2em;
+  background-image: linear-gradient(
+    var(--direc),
+    #5ddcf5,
+    #3c67e3 43%,
+    #4e00c2
+  );
+  animation: rotate 5s linear infinite;
+}
+
+@keyframes rotate {
+  to {
+    --direc: 360deg;
+  }
+}
