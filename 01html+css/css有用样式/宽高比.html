@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    /* 第一种做法 */
+    .div1 {
+      width: 50%;
+      background-color: red;
+      aspect-ratio: 4 / 3;
+    }
+
+    /* 第二种做法 */
+    .div2 {
+      width: 50%;
+      background-color: red;
+    }
+    .inner {
+      position: relative;
+      width: 100%;
+      padding-top: 75%;
+    }
+    .content {
+      position: absolute;
+      inset: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="div1"></div>
+
+  <div class="div2">
+    <div class="inner">
+      <div class="content"></div>
+    </div>
+  </div>
+</body>
+</html>
