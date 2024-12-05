@@ -7,6 +7,7 @@
  * 6 随机HEX颜色
  * 7 随机字符
  * 8 去掉字符串中的元素标记
+ * 9 数字格式化
  */
 
 
@@ -53,3 +54,7 @@ const randomChar = () => Math.random().toString(36).slice(2)
 const removeTag = (fragment) =>
   new DOMParser().parseFromString(fragment, 'text/html').body.textContent || ''
 // removeTag('<p>123</p>') // '123'
+
+
+// 9 数字格式化
+const formatNum = (str) => str.replace(/\B(?=(\d{3})+$)/g, ',')
