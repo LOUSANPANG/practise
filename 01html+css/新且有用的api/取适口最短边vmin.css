@@ -1,0 +1,11 @@
+/* 取适口的最短边 */
+img {
+  width: 100vmin;
+  height: 100vmin;
+}
+
+/* 取适口的最短边 */
+.img2 {
+  width: 100vmax;
+  height: 100vmax;
+}

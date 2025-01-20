@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .box {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+    }
+    .left, .right {
+      width: 50%;
+      height: 100%;
+    }
+    .left {
+      background-color: #000;
+    }
+    .right {
+      background-color: #fff;
+    }
+    h1 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-size: 3em;
+      transition: all 1s;
+      mix-blend-mode: difference; /* !!!!!文字智能适配背景 */
+    }
+    h1:hover {
+      transform: translateX(50px);
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="left"></div>
+    <div class="right"></div>
+    <h1>哈哈哈哈哈</h1>
+  </div>
+</body>
+</html>
