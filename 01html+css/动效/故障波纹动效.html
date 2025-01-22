@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    img {
+      width: 100%;
+      filter: url(#noise);
+    }
+  </style>
+</head>
+<body>
+  <svg display="none">
+    <defs>
+      <filter id="noise" color-interpolation-filters="linearRGB" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse">
+        <feTurbulence type="turbulence" baseFrequency="0 0.4" numOctaves="2" seed="2" stitchTiles="stitch" x="0%" y="0%" width="100%" height="100%" result="turbulence"/>
+        <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="30" xChannelSelector="R" yChannelSelector="B" x="0%" y="0%" width="100%" height="100%" result="displacementMap"/>
+      </filter>
+    </defs>
+  </svg>
+  <img src="./1.jpeg" alt="">
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+  <script>
+    const turbulence = document.querySelector('#noise feTurbulence')
+    const tl = gsap.timeline({
+      paused: true,
+      onUpdate: () => {
+        turbulence.setAttribute('baseFrequency', `0 ${val.frep}`)
+      }
+    })
+    
+    const val = { frep: 0.0000001 }
+    tl.to(val, {
+      frep: 0.4,
+      duration: 1
+    })
+    tl.to(val, {
+      frep: 0.0000001,
+      duration: 1
+    })
+
+    const img = document.querySelector('img')
+    if (img.complete) {
+      tl.play()
+    } else {
+      img.onload = () => {
+        tl.play()
+      }
+    }
+  </script>
+</body>
+</html>
