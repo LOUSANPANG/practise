@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    div {
+      text-align: center;
+      filter: contrast(3);
+    }
+    span {
+      font-size: 100px;
+      color: red;
+      animation: expand 3s ease-in-out;
+    }
+    @keyframes expand {
+      0% {
+        letter-spacing: -100px;
+        filter: blur(5px);
+      }
+      100% {
+        letter-spacing: 0;
+        filter: blur(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <span>
+      哈哈哈哈哈哈哈哈
+    </span>
+  </div>
+</body>
+</html>
