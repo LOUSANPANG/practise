@@ -5,7 +5,7 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
   <div class="app">
     <nav>
-      <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/">GSAP</RouterLink>
     </nav>
 
     <RouterView />
