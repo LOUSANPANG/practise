@@ -8,6 +8,11 @@ const router = createRouter({
       name: 'home',
       component: () => import('../views/Gsap.vue'),
     },
+    {
+      path: '/demo',
+      name: 'demo',
+      component: () => import('../views/demo.vue'),
+    },
   ],
 })
 

@@ -35,12 +35,6 @@ onMounted(() => {
 
 
 
-
-
-
-
-
-
   // gsap.ticker 是 GSAP 的帧率管理器，用于在每一帧中执行动画
   // gsap.deltaRatio 基于帧率的动画速度调整，可以让动画在 不同帧率下保持一致的移动速度，避免因为设备刷新率不同而导致动画快慢不一
   let xPos = 0;
@@ -58,6 +52,22 @@ onMounted(() => {
 
 
 
+
+  // gsap.utils 是 GSAP 的实用工具函数
+  const clamper = gsap.utils.normalize(0, 100)
+  let utilsVal = 0
+  function updateUtils() {
+    if (utilsVal >= 100) {
+      gsap.ticker.remove(updateUtils)
+    }
+    gsap.set(".box-inner", { height: `${clamper(utilsVal) * 100}%` })
+    utilsVal += 1
+  }
+  gsap.ticker.add(updateUtils)
+
+
+
+
 })
 </script>
 
@@ -65,20 +75,33 @@ onMounted(() => {
   <main>
     <div class="box effect" style="opacity: 0;">ticker</div>
     <div class="box ticker">ticker</div>
+    <div class="box utils" style="background-color: #fff;">
+      <div class="box-inner">utils</div>
+    </div>
   </main>
 </template>
 
 <style>
 .box {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
   width: 150px;
   height: 150px;
-  background-image: linear-gradient(to right, #06b6d4, #3b82f6);
+  background-color: #06b6d4;
   border-radius: 12px;
   font-size: 12px;
   color: #fff;
+}
+.box-inner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  border-radius: 12px;
+  background-color: #06b6d4;
 }
 </style>

@@ -6,6 +6,7 @@ import { RouterLink, RouterView } from 'vue-router'
   <div class="app">
     <nav>
       <RouterLink to="/">GSAP</RouterLink>
+      <RouterLink to="/demo">DEMO</RouterLink>
     </nav>
 
     <RouterView />
