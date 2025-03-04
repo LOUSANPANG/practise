@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      box-sizing: border-box;
+      padding: 100px 100px;
+      width: 100%;
+      background: black;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .box {
+      position: relative;
+      margin-bottom: 20px;
+      width: 33%;
+      height: 300px;
+      background: #999;
+      overflow: hidden;
+    }
+    .box::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-color: #fff;
+      transform: translate(var(--x, -10000px), var(--y, -10000px));
+    }
+    .inner {
+      position: absolute;
+      inset: 10px;
+      background-color: antiquewhite;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="box"><div class="inner"></div></div>
+    <div class="box"><div class="inner"></div></div>
+    <div class="box"><div class="inner"></div></div>
+    <div class="box"><div class="inner"></div></div>
+    <div class="box"><div class="inner"></div></div>
+    <div class="box"><div class="inner"></div></div>
+  </div>
+
+  <script>
+    const container = document.querySelector('.container')
+    const cards = document.querySelectorAll('.box')
+    container.onmousemove = (e) => {
+      for (const card of cards) {
+        const rect = card.getBoundingClientRect()
+        const x = e.clientX - rect.left - rect.width / 2
+        const y = e.clientY - rect.top - rect.height / 2
+        card.style.setProperty('--x', `${x}px`)
+        card.style.setProperty('--y', `${y}px`)
+      }
+    }
+  </script>
+</body>
+</html>
