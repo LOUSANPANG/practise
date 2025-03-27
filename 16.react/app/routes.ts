@@ -5,6 +5,6 @@ export default [
   index('./routes/home.tsx'),
   route('us', './routes/us.tsx'),
   layout('./routes/layout.tsx', [
-    route('user', './routes/user.tsx'),
+    route('user', './routes/layout-user.tsx'),
   ]),
 ] satisfies RouteConfig
