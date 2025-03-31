@@ -36,6 +36,7 @@ export default function App() {
   return <Outlet />
 }
 
+// 全局的404组件
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   let message = 'Oops!'
   let details = 'An unexpected error occurred.'
@@ -64,4 +65,10 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
       )}
     </main>
   )
+}
+
+// 全局的加载组件
+// 只要组件涉及到clientLoader,就会出现这个组件
+export function HydrateFallback() {
+  return <p>Loading ...</p>
 }
