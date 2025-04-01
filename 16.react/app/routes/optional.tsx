@@ -1,4 +1,4 @@
-import type { Route } from './+types/route-name'
+import type { Route } from './+types/optional'
 
 export default function Optional({ params }: Route.LoaderArgs) {
   return (

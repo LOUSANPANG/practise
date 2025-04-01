@@ -1,21 +1,27 @@
-import type { Route } from './+types/route-name'
+import type { Route } from './+types/home'
+import { Form } from 'react-router'
 
 export const handle = {
   auth: true,
 }
 
-export async function clientLoader() {
+export async function clientLoader({ params }: Route.ClientLoaderArgs) {
+  // params 代表路由参数
   await new Promise(resolve => setTimeout(resolve, 2000))
   return {
+    params,
     code: '200',
     data: 'clientLoader',
   }
 }
 
-export async function clientAction() {
+// 使用Form 和 button 触发该函数
+export async function clientAction({ request }: Route.ClientActionArgs) {
+  const formData = await request.formData()
+  const title = formData.get('title')
   return {
-    code: '200',
-    data: 'clientAction',
+    title,
+    formData,
   }
 }
 
@@ -28,10 +34,15 @@ export default function Home({ loaderData, actionData, params, matches }: Route.
         {JSON.stringify(loaderData)}
       </p>
 
+      <Form method="post" style={{ border: '1px solid blur' }}>
+        <input type="text" name="title" style={{ border: '1px solid red' }} />
+        <button type="submit" style={{ border: '1px solid green' }}>Submit</button>
+      </Form>
       <p>
         Action Data:
         {JSON.stringify(actionData)}
       </p>
+
       <p>
         Route Parameters:
         {JSON.stringify(params)}
