@@ -3,6 +3,7 @@ import { index, layout, prefix, route } from '@react-router/dev/routes'
 
 export default [
   index('./routes/home.tsx'),
+
   route('us', './routes/us.tsx'),
 
   layout('./routes/layout.tsx', [
@@ -17,4 +18,6 @@ export default [
   route(':lang?/optional', './routes/optional.tsx'),
 
   route('/render-component/*', './routes/render-component.tsx'),
+
+  route('/store', './routes/store.tsx'),
 ] satisfies RouteConfig
