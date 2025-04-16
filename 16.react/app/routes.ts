@@ -20,4 +20,6 @@ export default [
   route('/render-component/*', './routes/render-component.tsx'),
 
   route('/store', './routes/store.tsx'),
+
+  route('/services', './routes/tanstack-query.tsx'),
 ] satisfies RouteConfig
