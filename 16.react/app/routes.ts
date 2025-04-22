@@ -22,4 +22,6 @@ export default [
   route('/store', './routes/store.tsx'),
 
   route('/services', './routes/tanstack-query.tsx'),
+
+  route('/shadcn-ui', './routes/shadcn-ui.tsx'),
 ] satisfies RouteConfig
