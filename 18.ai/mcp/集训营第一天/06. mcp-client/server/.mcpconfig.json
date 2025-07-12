@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "hefeng-weather": {
+      "command": "node",
+      "args": ["../weather-mcp-server/build/index.js"],
+      "options": {
+        "cwd": "/Users/jie/Desktop/聊天机器人"
+      }
+    }
+  }
+}
