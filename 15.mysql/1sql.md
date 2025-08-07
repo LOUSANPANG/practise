@@ -152,6 +152,70 @@ SET 字段1 = 新值1, 字段2 = 新值2, ...
 
 ```bash
 # 查询
-SELECT 字段1, 字段2, ... FROM 表名 [WHERE 条件];
+SELECT 字段1, 字段2, ... FROM 表名;
 SELECT * FROM 表名;
+# 别名
+SELECT 字段1 AS 别名1, 字段2 AS 别名2, ... FROM 表名;
+SELECT 字段1 别名1, 字段2 别名2, ... FROM 表名;
+
+# 去重
+SELECT DISTINCT 字段1, 字段2, ... FROM 表名;
+
+# 条件查询
+# 条件
+  # 等于 =
+  # 大于 >
+  # 大于等于 >=
+  # 小于 <
+  # 小于等于 <=
+  # 不等于 <> !=
+  # 范围： BETWEEN 最小值 AND 最大值
+  # 列表： IN (值1, 值2, ...)
+  # 模糊查询： LIKE
+    # % 匹配任意字符
+    # _ 匹配单个字符
+  # 是NULL： IS NULL
+  # 不是NULL： IS NOT NULL
+  # AND 或 &&
+  # OR 或 ||
+  # NOT 或 !
+SELECT * FROM 表名 WHERE 字段 IS NULL;
+SELECT * FROM 表名 WHERE age >= 15 AND age <= 20;
+SELECT * FROM 表名 WHERE age BETWEEN 15 AND 20;
+SELECT * FROM 表名 WHERE age IN(15, 20, 25);
+SELECT * FROM 表名 WHERE name LIKE '__'; # 查询name为两个字的员工
+SELECT * FROM 表名 WHERE name LIKE '%王%'; # 查询name中包含王的员工
+SELECT * FROM 表名 WHERE name LIKE '王%'; # 查询name中以王开头的员工
+SELECT * FROM 表名 WHERE name LIKE '%王'; # 查询name中以王结尾的员工
+SELECT * FROM 表名 WHERE name LIKE '王_'; # 查询name中以王开头，第二个字符任意的员工
+
+# 聚合函数 (所有的NULL值都不参与计算)
+COUNT() # 统计记录数
+SUM() # 统计总和
+AVG() # 统计平均值
+MAX() # 统计最大值
+MIN() # 统计最小值
+SELECT 聚合函数(字段列表) FROM 表名;
+SELECT COUNT(name) FROM 表名; # 统计不为NULL的数量
+SELECT MAX(age) FROM 表名; # 统计age最大值
+SELECT MIN(age) FROM 表名; # 统计age最小值
+SELECT AVG(age) FROM 表名; # 统计age平均值
+SELECT SUM(age) FROM 表名; # 统计age总和
+
+# 分组
+GROUP BY 字段名
+HAVING 条件 # 分组后过滤条件
+SELECT 字段列表 FROM 表名 [WHERE 条件] GROUP BY 分组字段名 [HAVING 分组后过滤条件];
+SELECT gender, COUNT(*) from 表名 GROUP BY gender; # 根据性别分组，统计男性员工 和 女性员工的数量
+SELECT gender, AVG(age) FROM 表名 GROUP BY gender; # 根据性别分组，统计男性员工和女性员工的平均年龄
+SELECT gender, AVG(age) FROM 表名 GROUP BY gender HAVING AVG(age) > 25; # 根据性别分组，统计平均年龄大于25的员工
+SELECT gender, AVG(age) FROM 表名 GROUP BY gender HAVING AVG(age) > 25 ORDER BY AVG(age) DESC; # 根据性别分组，统计平均年龄大于25的员工，按平均年龄降序排序
+SELECT gender, AVG(age) FROM 表名 GROUP BY gender HAVING AVG(age) > 25 ORDER BY AVG(age) DESC LIMIT 0, 1; # 根据性别分组，统计平均年龄大于25的员工，按平均年龄降序排序，取第一条数据
+
+
+# 排序
+ORDER BY 字段名 [ASC|DESC]
+
+# 分页
+LIMIT 偏移量, 行数
 ```
