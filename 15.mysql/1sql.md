@@ -196,6 +196,7 @@ AVG() # 统计平均值
 MAX() # 统计最大值
 MIN() # 统计最小值
 SELECT 聚合函数(字段列表) FROM 表名;
+
 SELECT COUNT(name) FROM 表名; # 统计不为NULL的数量
 SELECT MAX(age) FROM 表名; # 统计age最大值
 SELECT MIN(age) FROM 表名; # 统计age最小值
@@ -206,8 +207,10 @@ SELECT SUM(age) FROM 表名; # 统计age总和
 GROUP BY 字段名
 HAVING 条件 # 分组后过滤条件
 SELECT 字段列表 FROM 表名 [WHERE 条件] GROUP BY 分组字段名 [HAVING 分组后过滤条件];
+
 SELECT gender, COUNT(*) from 表名 GROUP BY gender; # 根据性别分组，统计男性员工 和 女性员工的数量
 SELECT gender, AVG(age) FROM 表名 GROUP BY gender; # 根据性别分组，统计男性员工和女性员工的平均年龄
+SELECT workaddress, COUNT(*) FROM 表名 age > 20 GROUP BY workaddress; # 根据工作地址分组，统计每个工作地址的年龄大约20的员工数量
 SELECT gender, AVG(age) FROM 表名 GROUP BY gender HAVING AVG(age) > 25; # 根据性别分组，统计平均年龄大于25的员工
 SELECT gender, AVG(age) FROM 表名 GROUP BY gender HAVING AVG(age) > 25 ORDER BY AVG(age) DESC; # 根据性别分组，统计平均年龄大于25的员工，按平均年龄降序排序
 SELECT gender, AVG(age) FROM 表名 GROUP BY gender HAVING AVG(age) > 25 ORDER BY AVG(age) DESC LIMIT 0, 1; # 根据性别分组，统计平均年龄大于25的员工，按平均年龄降序排序，取第一条数据
@@ -215,7 +218,18 @@ SELECT gender, AVG(age) FROM 表名 GROUP BY gender HAVING AVG(age) > 25 ORDER B
 
 # 排序
 ORDER BY 字段名 [ASC|DESC]
+SELECT 字段列表 FROM 表名 ORDER BY 字段名 [ASC|DESC]; # 按字段名排序，默认升序
+SELECT 字段列表 FROM 表名 ORDER BY 字段名1 [ASC|DESC], 字段名2 [ASC|DESC], ...; # 按多个字段排序
+
+SELECT * from 表名 ORDER BY age DESC; # 年龄降序排序
 
 # 分页
 LIMIT 偏移量, 行数
+SELECT 字段列表 FROM 表名 LIMIT 起始索引, 查询纪录;
+
+SELECT * FROM 表名 ORDER BY 字段名 LIMIT 10; # 按字段名排序，取第1页数据，每页10条
+SELECT * FROM 表名 ORDER BY 字段名 LIMIT 0, 10; # 按字段名排序，取第1页数据，每页10条
 ```
+
+
+## DCL 
