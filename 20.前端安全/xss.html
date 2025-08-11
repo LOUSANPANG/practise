@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./purify.js"></script>
+</head>
+
+<body>
+  <div id="app"></div>
+
+  <script>
+    const app = document.getElementById('app');
+    // app.innerHTML = `<img src="1" onerror="alert(1)">`;
+    app.innerHTML = DOMPurify.sanitize(`<img src="1" onerror="alert(1)">`);
+    console.log(app.innerHTML);
+  </script>
+</body>
+
+</html>
