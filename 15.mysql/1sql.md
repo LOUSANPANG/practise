@@ -151,6 +151,10 @@ SET 字段1 = 新值1, 字段2 = 新值2, ...
 ## DQL 用来查询数据库中的数据记录
 
 ```bash
+SELECT 字段列表 FROM 表名 WHERE 条件列表 GROUP BY 分组字段列表 HAVING 分组后条件列表 ORDER BY 排序字段列表 LIMIT 分页参数
+```
+
+```bash
 # 查询
 SELECT 字段1, 字段2, ... FROM 表名;
 SELECT * FROM 表名;
@@ -232,4 +236,41 @@ SELECT * FROM 表名 ORDER BY 字段名 LIMIT 0, 10; # 按字段名排序，取�
 ```
 
 
-## DCL 
+## DCL 用来控制数据库的用户、控制数据库访问、权限
+
+```bash
+# 查询用户
+USE mysql;
+SELECT * FROM user;
+
+# 创建用户
+CREATE USER '用户名'@'主机名' IDENTIFIED BY '密码';
+
+# 用户可以在任意主机访问该数据库
+CREATE USER '用户名'@'%' IDENTIFIED BY '密码';
+
+# 修改密码
+ALTER USER '用户名'@'主机名' IDENTIFIED WITH mysql_native_password BY '新密码';
+
+# 删除用户
+DROP USER '用户名'@'主机名';
+
+# 权限控制
+
+# 权限列表
+# 所有权限：ALL PRIVILEGES
+# 数据库权限：CREATE, DROP, ALTER, INDEX, INSERT, UPDATE, DELETE, SELECT
+# 表权限：CREATE, DROP, ALTER, INSERT, UPDATE, DELETE, SELECT
+# 视图权限：CREATE, DROP, ALTER, INSERT, UPDATE, DELETE, SELECT
+# 存储过程权限：CREATE, DROP, ALTER, EXECUTE
+# 函数权限：CREATE, DROP, ALTER, EXECUTE
+
+# 查看权限
+SHOW GRANTS FOR '用户名'@'主机名';
+# 授予权限
+GRANT 权限列表 ON 数据库名.表名 TO '用户名'@'主机名';
+# 撤销权限
+REVOKE 权限列表 ON 数据库名.表名 FROM '用户名'@'主机名';
+# 刷新权限
+FLUSH PRIVILEGES;
+```
