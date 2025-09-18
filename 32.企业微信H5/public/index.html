@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>企业微信 H5 Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="企业微信录音转文字功能演示" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        padding: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        margin: 0;
+      }
+
+      .container {
+        max-width: 400px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+      }
+
+      h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #333;
+        font-size: 24px;
+        font-weight: 600;
+      }
+
+      .btn {
+        display: block;
+        width: 100%;
+        padding: 14px 20px;
+        margin: 12px 0;
+        background: linear-gradient(45deg, #07c160, #06ad56);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(7, 193, 96, 0.3);
+      }
+
+      .btn:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(7, 193, 96, 0.4);
+      }
+
+      .btn:active:not(:disabled) {
+        transform: translateY(0);
+      }
+
+      .btn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+
+      #status {
+        margin-top: 25px;
+        text-align: center;
+        font-size: 15px;
+        color: #666;
+        min-height: 20px;
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 8px;
+        transition: all 0.3s ease;
+      }
+
+      .loading {
+        animation: pulse 1.5s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.6;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>🎤 企业微信录音 Demo</h2>
+
+      <button id="startBtn" class="btn">🎤 开始录音</button>
+      <button id="stopBtn" class="btn">⏹ 停止录音</button>
+      <button id="translateBtn" class="btn">📝 转文字</button>
+
+      <div id="status">请点击开始录音</div>
+    </div>
+
+    <!-- 企业微信 JSSDK -->
+    <script src="https://wwcdn.weixin.qq.com/node/open/js/wecom-jssdk-2.3.1.js"></script>
+    <!-- vConsole -->
+    <script src="https://unpkg.com/vconsole/dist/vconsole.min.js"></script>
+
+    <script>
+      new VConsole()
+
+      let localId = null
+
+      function setStatus(msg, isLoading = false) {
+        const statusEl = document.getElementById('status')
+        statusEl.innerText = msg
+
+        if (isLoading) {
+          statusEl.classList.add('loading')
+        } else {
+          statusEl.classList.remove('loading')
+        }
+      }
+
+      async function initWeCom() {
+        setStatus('正在初始化企业微信SDK...', true)
+
+        let data
+        try {
+          const currentUrl = location.href.split('#')[0]
+          const url = `http://192.168.100.136:3000/get-signature?url=${encodeURIComponent(currentUrl)}`
+
+          const res = await fetch(url)
+          if (!res.ok) {
+            const errorText = await res.text()
+            throw new Error(`HTTP ${res.status}: ${res.statusText}`)
+          }
+
+          data = await res.json()
+          console.log('✅ 解析后的数据:', data)
+        } catch (error) {
+          console.error('❌ 获取签名失败:', error)
+          setStatus('❌ 获取签名失败: ' + error.message)
+          return
+        }
+
+        ww.register({
+          // jsApiList: ['startRecord', 'stopRecord', 'translateVoice'],
+          // getConfigSignature() {
+          //   return ww.getSignature(data.signature)
+          // },
+          corpId: data.corpId,
+          timestamp: data.timestamp,
+          nonceStr: data.noncestr,
+          signature: data.signature,
+          // corpId: 'wwf1919aec8ac3a73d',
+          // timestamp: '1758180210',
+          // nonceStr: 'l1nFp4CnaAJpU7mI',
+          // signature: 'b1aee9a32656a9048874a792809143f88cffdfec',
+          jsApiList: ['startRecord', 'stopRecord', 'translateVoice'],
+        })
+
+        setStatus('✅ 企业微信SDK初始化成功，可以开始录音')
+
+        document.getElementById('startBtn').addEventListener('click', function () {
+          setStatus('🎤 正在录音中...', true)
+
+          ww.startRecord({
+            success: function () {
+              console.log('🎤 录音开始成功')
+              setStatus('🎤 正在录音中...', true)
+            },
+            fail: function (err) {
+              console.log('❌ 录音失败: ' + JSON.stringify(err))
+              setStatus('❌ 录音失败: ' + JSON.stringify(err))
+            },
+          })
+        })
+
+        document.getElementById('stopBtn').addEventListener('click', function () {
+          setStatus('⏹ 正在停止录音...', true)
+
+          ww.stopRecord({
+            success: function (res) {
+              console.log('✅ 停止录音成功，localId: ' + res.localId)
+              localId = res.localId
+              setStatus('✅ 录音完成，可以转文字了')
+            },
+            fail: function (err) {
+              console.log('❌ 停止录音失败: ' + JSON.stringify(err))
+              setStatus('❌ 停止录音失败: ' + JSON.stringify(err))
+            },
+          })
+        })
+
+        document.getElementById('translateBtn').addEventListener('click', function () {
+          if (!localId) {
+            setStatus('⚠️ 请先录音')
+            return
+          }
+
+          setStatus('📝 正在转文字...', true)
+
+          ww.translateVoice({
+            localId: localId,
+            isShowProgressTips: 1,
+            success: function (res) {
+              console.log('✅ 转文字成功: ' + res.translateResult)
+              setStatus('✅ 转文字成功: ' + res.translateResult)
+            },
+            fail: function (err) {
+              console.log('❌ 转文字失败: ' + JSON.stringify(err))
+              setStatus('❌ 转文字失败: ' + JSON.stringify(err))
+            },
+          })
+        })
+      }
+
+      // 页面加载完成后初始化
+      document.addEventListener('DOMContentLoaded', function () {
+        setStatus('正在初始化企业微信SDK...', true)
+        initWeCom()
+      })
+    </script>
+  </body>
+</html>
