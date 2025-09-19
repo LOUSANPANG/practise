@@ -133,7 +133,7 @@
         let data
         try {
           const currentUrl = location.href.split('#')[0]
-          const url = `http://192.168.100.136:3000/get-signature?url=${encodeURIComponent(currentUrl)}`
+          const url = `http://10.160.11.190:3000/get-signature?url=${encodeURIComponent(currentUrl)}`
 
           const res = await fetch(url)
           if (!res.ok) {
@@ -150,19 +150,18 @@
         }
 
         ww.register({
-          // jsApiList: ['startRecord', 'stopRecord', 'translateVoice'],
-          // getConfigSignature() {
-          //   return ww.getSignature(data.signature)
-          // },
+          jsApiList: ['getConfigSignature', 'startRecord', 'stopRecord', 'onVoiceRecordEnd', 'translateVoice'],
           corpId: data.corpId,
-          timestamp: data.timestamp,
-          nonceStr: data.noncestr,
-          signature: data.signature,
-          // corpId: 'wwf1919aec8ac3a73d',
-          // timestamp: '1758180210',
-          // nonceStr: 'l1nFp4CnaAJpU7mI',
-          // signature: 'b1aee9a32656a9048874a792809143f88cffdfec',
-          jsApiList: ['startRecord', 'stopRecord', 'translateVoice'],
+          beta: true,
+          debug: true,
+          getConfigSignature() {
+            return {
+              agentId: data.agentId,
+              timestamp: data.timestamp,
+              nonceStr: data.noncestr,
+              signature: data.signature,
+            }
+          },
         })
 
         setStatus('✅ 企业微信SDK初始化成功，可以开始录音')

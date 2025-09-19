@@ -1,11 +1,11 @@
 const express = require('express');
 const axios = require('axios');
-const sha1 = require('js-sha1');
+const crypto = require('crypto');
 const path = require('path');
 
 const app = express();
 const PORT = 3000;
-const HOST = '192.168.100.136';
+const HOST = '10.160.11.190';
 
 // 添加 CORS 支持
 app.use((req, res, next) => {
@@ -29,6 +29,7 @@ app.use((req, res, next) => {
 const config = {
   corpId: 'wwf1919aec8ac3a73d',
   corpSecret: '-xZU48E7B2pT3M5rN9WrtSYU09Mzul5lLfLhG8-YAjM',
+  agentId: '1000053',
   host: HOST,
   port: PORT
 };
@@ -36,13 +37,23 @@ const config = {
 // 静态资源托管
 app.use(express.static(path.join(__dirname, 'public')));
 
+// 企业微信域名验证文件访问
+app.get('/WW_verify_aeXyW4U1HvfbDqcp.txt', (req, res) => {
+  res.setHeader('Content-Type', 'text/plain');
+  res.send('aeXyW4U1HvfbDqcp');
+});
+app.get('/WW_verify_POfXpbGHcuiyD0In.txt', (req, res) => {
+  res.setHeader('Content-Type', 'text/plain');
+  res.send('POfXpbGHcuiyD0In');
+});
+
 // 获取 access_token
 async function getAccessToken() {
   try {
     const url = `https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=${config.corpId}&corpsecret=${config.corpSecret}`;
     const res = await axios.get(url);
     const data = res.data;
-    if (data.access_token) {
+    if (data.access_token) {  
       return data.access_token;
     } else {
       throw new Error(`获取 access_token 失败: ${JSON.stringify(data)}`);
@@ -71,20 +82,28 @@ async function getJsapiTicket() {
   }
 }
 
-// 随便生成一段随机字符串，通常 16–32 位即可
-function createNonceStr(length = 16) {
-  const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let str = '';
-  for (let i = 0; i < length; i++) {
-    str += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return str;
+// 随便生成一段随机字符串
+function createNonceStr() {
+  return Math.random().toString(36).substr(2, 15);
+}
+
+// 生成时间戳
+function createTimestamp() {
+  return parseInt(Date.now() / 1000) + '';
+}
+
+// 生成签名
+function createSignature(ticket, noncestr, timestamp, url) {
+  url = decodeURIComponent(url);
+  const plainText = `jsapi_ticket=${ticket}&noncestr=${noncestr}&timestamp=${timestamp}&url=${url}`;
+  return crypto.createHash('sha1').update(plainText).digest('hex');
 }
 
 // 前端调用接口：获取签名
 app.get('/get-signature', async (req, res) => {
   try {
-    if (!req.query.url) {
+    const url = req.query.url;
+    if (!url) {
       return res.status(400).json({ 
         success: false,
         error: '缺少 url 参数' 
@@ -93,21 +112,19 @@ app.get('/get-signature', async (req, res) => {
     
     const ticket = await getJsapiTicket();
     const noncestr = createNonceStr();
-    const timestamp = Math.floor(Date.now() / 1000);
-    const url = decodeURIComponent(req.query.url);
-
-    const rawString = `jsapi_ticket=${ticket}&noncestr=${noncestr}&timestamp=${timestamp}&url=${url}`;
-    const signature = sha1(rawString);
+    const timestamp = createTimestamp();
+    const signature = createSignature(ticket, noncestr, timestamp, url);
     const result = {
       success: true,
       corpId: config.corpId,
+      agentId: config.agentId,
       noncestr,
       timestamp,
       signature,
     };
     
-    console.log('✅ 返回签名数据:', result);
     res.json(result);
+    console.log('✅ 返回签名数据:', result);
   } catch (err) {
     console.error('❌ 获取签名失败:', err);
     res.status(500).json({ 

@@ -1,14 +1,16 @@
 {
-  "name": "wecom-h5-demo",
+  "name": "qywx-h5-demo",
   "version": "1.0.0",
-  "description": "WeCom H5 Demo with voice record and translate",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "dependencies": {
     "axios": "^1.7.0",
-    "express": "^4.19.0",
-    "js-sha1": "^0.6.0"
+    "express": "^4.19.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }
